@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>כיתת פסטיבוקה 🎪</title>
+<style>
+:root{--bg:#1a0b2e;--card:#2a1450;--card2:#35196a;--tx:#fff6e5;--mut:#c9b6f0;--pink:#ff3d9a;--yel:#ffd23f;--cyan:#2de2e6;--grn:#7dff6b;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media(prefers-color-scheme:light){:root:not([data-theme="dark"]){--bg:#1a0b2e}}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:radial-gradient(circle at 20% 0,#5b1d9a 0,transparent 40%),radial-gradient(circle at 90% 20%,#a3126b 0,transparent 35%),var(--bg);color:var(--tx);font-family:"Rubik","Heebo",system-ui,Arial,sans-serif;min-height:100vh}
+.lights{height:14px;background:repeating-linear-gradient(90deg,var(--pink) 0 24px,var(--yel) 24px 48px,var(--cyan) 48px 72px,var(--grn) 72px 96px);animation:mv 3s linear infinite;background-size:96px 14px}
+@keyframes mv{to{background-position:96px 0}}
+header{display:flex;align-items:center;gap:12px;padding:12px 16px;flex-wrap:wrap}
+h1{margin:0;font-size:26px;background:linear-gradient(90deg,var(--yel),var(--pink),var(--cyan));-webkit-background-clip:text;background-clip:text;color:transparent}
+nav{display:flex;gap:6px;flex-wrap:wrap;margin-inline-start:auto}
+main{max-width:980px;margin:0 auto;padding:8px 14px 60px}
+button,input,textarea,select{font:inherit;color:var(--tx)}
+button{background:linear-gradient(135deg,var(--pink),#b13cff);border:0;border-radius:999px;padding:8px 16px;cursor:pointer;font-weight:700;box-shadow:0 3px 0 #0005}
+button.ghost{background:var(--card2);box-shadow:none}
+button.on{background:linear-gradient(135deg,var(--yel),#ff9f1c);color:#2a1450}
+button.sm{padding:4px 10px;font-size:13px}
+button.danger{background:#c0245a}
+input,textarea,select{background:#1a0b2e;border:2px solid #5b36a0;border-radius:12px;padding:9px 12px;width:100%;margin:4px 0}
+input:focus,textarea:focus{outline:0;border-color:var(--cyan)}
+.card{background:var(--card);border:2px solid #4b2a8a;border-radius:18px;padding:16px;margin:10px 0;position:relative}
+.ticket{border-style:dashed;border-color:var(--yel)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px}
+.row{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.mut{color:var(--mut);font-size:14px}
+.tag{display:inline-block;border-radius:999px;padding:2px 10px;font-size:12px;font-weight:700;background:var(--cyan);color:#1a0b2e}
+.tag.t{background:var(--yel)}.tag.g{background:var(--grn)}
+.chat{height:380px;overflow:auto;background:#1a0b2e;border-radius:14px;padding:10px;display:flex;flex-direction:column;gap:8px}
+.msg{background:var(--card2);border-radius:14px;padding:8px 12px;max-width:85%;align-self:flex-start}
+.msg.me{align-self:flex-end;background:#6d2bb8}
+.msg b{font-size:13px;color:var(--yel)}
+.hero{text-align:center;padding:30px 10px}
+.hero h2{font-size:34px;margin:6px}
+.opt{display:block;background:#1a0b2e;border:2px solid #5b36a0;border-radius:12px;padding:8px 12px;margin:5px 0;cursor:pointer}
+.opt input{width:auto;margin-inline-end:8px}
+.opt.ok{border-color:var(--grn)}
+table{width:100%;border-collapse:collapse;display:block;overflow-x:auto}
+td,th{border:1px solid #4b2a8a;padding:6px 10px;white-space:nowrap}
+#toast{position:fixed;bottom:calc(16px + env(safe-area-inset-bottom,0px));left:50%;transform:translateX(-50%);background:var(--pink);padding:10px 18px;border-radius:999px;display:none;z-index:9}
+.vb{display:inline-grid;place-items:center;width:17px;height:17px;border-radius:50%;background:#1d9bf0;color:#fff;font-size:11px;font-weight:900;margin-inline:4px;vertical-align:middle}
+.notif{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:linear-gradient(135deg,var(--yel),#ff9f1c);color:#2a1450;border-radius:16px;padding:12px 16px;margin:8px 0;box-shadow:0 4px 14px #0007;animation:pop .4s}
+.notif div{margin:4px 0}
+@keyframes pop{from{transform:scale(.9);opacity:0}}
+audio{max-width:100%;height:38px;vertical-align:middle}
+.due{display:inline-block;background:#1a0b2e;border:1px solid var(--cyan);border-radius:999px;padding:1px 10px;font-size:13px}.due.late{border-color:var(--pink);color:#ff8fc4}
+.avatar{display:inline-grid;place-items:center;width:34px;height:34px;border-radius:50%;background:linear-gradient(135deg,var(--cyan),var(--pink));font-weight:800;color:#1a0b2e}
+</style>
+</head>
+<body>
+<div class="lights"></div>
+<header><h1>🎪 כיתת פסטיבוקה</h1><nav id="nav"></nav></header>
+<main id="app"><p class="mut">טוען…</p></main>
+<div id="toast"></div>
+<script>
+const PASS="כיתתפסטיבוקה666";
+let db=null,assets=null,me=null,ready=false;
+const S={profiles:[],classes:[],msgs:[],tasks:[],subs:[],meta:[]};
+const V={page:"classes",cid:null,tab:"chat",login:"choose",view:null};
+const $=s=>document.querySelector(s);
+const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const uid=()=>Date.now().toString(36)+Math.random().toString(36).slice(2,7);
+function toast(t){const e=$("#toast");e.textContent=t;e.style.display="block";clearTimeout(toast.h);toast.h=setTimeout(()=>e.style.display="none",2800)}
+const P=u=>S.profiles.find(p=>p.id===u);
+const nick=u=>P(u)?.nick||u;
+const isT=()=>me&&P(me)?.role==="teacher";
+const cls=()=>S.classes.find(c=>c.id===V.cid);
+const inCls=c=>c&&(c.teachers.includes(me)||c.students.includes(me));
+const isCT=c=>c&&c.teachers.includes(me);
+const ini=u=>esc((nick(u)||"?").trim().slice(0,1));
+const vb=u=>P(u)?.verified?'<span class="vb" title="פרופיל מאומת על ידי מורה">✓</span>':"";
+const canDelMsg=x=>isT()&&(x.u===me||(x.cid!=="T"&&isCT(S.classes.find(c=>c.id===x.cid))));
+const vbtn=u=>isT()?`<button class="ghost sm" data-act="verify" data-u="${esc(u)}">${P(u)?.verified?"הסרת וי":"מתן וי ✓"}</button>`:"";
+try{me=localStorage.getItem("fc_me")}catch(e){}
+
+async function init(){
+  const c=await claude.use("db");assets=await claude.use("assets");
+  if(!c){ $("#app").innerHTML='<div class="card hero"><h2>🔒 צריך להיות מחובר ל־Claude</h2><p class="mut">כדי שהכיתות יישמרו ויהיו משותפות, פתחו את הדף דרך claude.ai כשאתם מחוברים.</p></div>';return}
+  db=c;
+  for(const k of Object.keys(S)){db.collection(k).onSnapshot(sn=>{S[k]=sn.docs.map(d=>({id:d.id,...d.data()}));ready=true;render()},e=>toast("שגיאת חיבור"))}
+}
+const col=k=>db.collection(k);
+async function guard(f){try{await f()}catch(e){toast("אין הרשאה או שגיאה: "+(e.message||e.code||""))}}
+
+function render(){
+  if(!ready&&db){return}
+  const keep={},act=document.activeElement;let fid=act&&act.id,sel=act&&act.selectionStart;
+  document.querySelectorAll("#app [id]").forEach(e=>{if("value" in e)keep[e.id]=e.value});
+  const chk={};document.querySelectorAll("#app input[type=radio]").forEach(e=>{if(e.checked)chk[e.name]=e.value});
+  if(me&&!P(me)){me=null}
+  $("#nav").innerHTML=me?`<button class="ghost ${V.page==="classes"?"on":""}" data-go="classes">📚 כיתות</button><button class="ghost ${V.page==="board"?"on":""}" data-go="board">📅 לוח${pendN()?` (${pendN()})`:""}</button>${isT()?`<button class="ghost ${V.page==="tg"?"on":""}" data-go="tg">🧑‍🏫 קבוצת המורים</button>`:""}<button class="ghost ${V.page==="inv"?"on":""}" data-go="inv">✉️ הזמנות${myInv().length?` (${myInv().length})`:""}</button><button class="ghost ${V.page==="me"?"on":""}" data-go="me">👤 ${esc(nick(me))}</button>`:"";
+  $("#app").innerHTML=(me&&!isT()?notifV():"")+(!me?loginV():V.page==="classes"?(V.cid?classV():classesV()):V.page==="board"?boardV():V.page==="tg"?tgV():V.page==="inv"?invV():meV());
+  for(const id in keep){const e=document.getElementById(id);if(e&&e.type!=="file")e.value=keep[id]}
+  for(const n in chk){const e=document.querySelector(`#app input[name="${n}"][value="${chk[n]}"]`);if(e)e.checked=true}
+  document.querySelectorAll(".chat").forEach(c=>c.scrollTop=c.scrollHeight);
+  if(fid){const e=document.getElementById(fid);if(e){e.focus();try{e.setSelectionRange(sel,sel)}catch(x){}}}
+}
+const myInv=()=>S.classes.filter(c=>(c.invites||[]).includes(me));
+const seenKey=()=>"fc_seen_"+me;
+function seenT(){const d=Date.now()-7*864e5;try{return +localStorage.getItem(seenKey())||d}catch(e){return d}}
+function notifV(){
+  const s=seenT(),mine=S.classes.filter(c=>c.students.includes(me)).map(c=>c.id),n=[];
+  S.tasks.filter(t=>mine.includes(t.cid)&&t.t>s).forEach(t=>n.push(`📣 משימה חדשה: <b>${esc(t.title)}</b> (${esc(S.classes.find(c=>c.id===t.cid)?.name||"")})`));
+  S.subs.filter(x=>x.u===me&&x.gat>s&&x.grade!=null).forEach(x=>{const t=S.tasks.find(t=>t.id===x.tid);n.push(`🏆 פורסם הציון שלך ב־<b>${esc(t?.title||"משימה")}</b>: ${esc(x.grade)}/${esc(t?.max||100)}`)});
+  return n.length?`<div class="notif"><b>🔔 הודעות חדשות</b>${n.map(x=>`<div>${x}</div>`).join("")}<button class="sm" data-act="seen">הבנתי ✓</button></div>`:"";
+}
+const fmtD=ms=>new Date(ms).toLocaleString("he-IL",{weekday:"short",day:"numeric",month:"numeric",hour:"2-digit",minute:"2-digit"});
+function rel(ms){const d=ms-Date.now(),a=Math.abs(d),h=Math.round(a/36e5),dy=Math.floor(a/864e5);const s=dy>=1?`${dy} ימים`:h>=1?`${h} שעות`:`${Math.max(1,Math.round(a/6e4))} דקות`;return d<0?`באיחור של ${s}`:`נשארו ${s}`}
+const dueTag=t=>t.due?`<span class="due ${t.due<Date.now()?"late":""}">⏰ ${fmtD(t.due)} · ${rel(t.due)}</span>`:"";
+const pendN=()=>!me||isT()?0:S.tasks.filter(t=>S.classes.some(c=>c.id===t.cid&&c.students.includes(me))&&!S.subs.some(s=>s.tid===t.id&&s.u===me)).length;
+function boardV(){
+  const T=isT(),ids=S.classes.filter(c=>T?isCT(c):c.students.includes(me)).map(c=>c.id),now=Date.now();
+  const ts=S.tasks.filter(t=>ids.includes(t.cid)).sort((a,b)=>(a.due||9e15)-(b.due||9e15));
+  const done=t=>S.subs.some(s=>s.tid===t.id&&s.u===me);
+  const item=t=>{const c=S.classes.find(c=>c.id===t.cid);const st=T?` <span class="mut">${S.subs.filter(s=>s.tid===t.id).length}/${c.students.length} הגישו</span>`:"";return `<div class="card row" style="justify-content:space-between"><div><b>${esc(t.title)}</b> <span class="tag">${esc(c.name)}</span> <span class="tag t">${{open:"שאלה",mc:"אמריקאית",file:"קובץ",audio:"הקלטה"}[t.type]}</span><div>${dueTag(t)||'<span class="mut">ללא תאריך הגשה</span>'}${st}</div></div><button class="sm" data-open="${c.id}" data-to="tasks">${T||done(t)?"פתיחה":"להגשה ›"}</button></div>`};
+  const sec=(h,l)=>l.length?`<h3>${h}</h3>`+l.map(item).join(""):"";
+  const pend=T?ts:ts.filter(t=>!done(t));
+  return `<h2>📅 לוח הגשות</h2>`+(ts.length?"":'<p class="mut">אין משימות כרגע 🎉</p>')+sec(T?"⌛ עבר המועד":"🚨 באיחור",pend.filter(t=>t.due&&t.due<now))+sec(T?"📌 קרובות":"📝 להגשה",pend.filter(t=>t.due&&t.due>=now))+sec("🗒️ בלי תאריך",pend.filter(t=>!t.due))+(T?"":sec("✅ הוגשו",ts.filter(done)));
+}
+const aud=u=>u&&/^(\/_blob\/|https:\/\/)/.test(u)?`<audio controls src="${esc(u)}"></audio>`:"";
+const REC={key:null,blob:null,url:null,mr:null,on:false};
+function recClear(){if(REC.url)URL.revokeObjectURL(REC.url);REC.key=REC.blob=REC.url=null;REC.on=false}
+async function recStart(key){
+  try{const st=await navigator.mediaDevices.getUserMedia({audio:true});recClear();const ch=[],mr=new MediaRecorder(st);REC.mr=mr;REC.key=key;REC.on=true;
+  mr.ondataavailable=e=>ch.push(e.data);
+  mr.onstop=()=>{st.getTracks().forEach(t=>t.stop());REC.blob=new Blob(ch,{type:mr.mimeType||"audio/webm"});REC.url=URL.createObjectURL(REC.blob);REC.on=false;render()};
+  mr.start();render()}catch(e){recClear();toast("אין גישה למיקרופון 🎙️");render()}
+}
+const recUI=key=>REC.key!==key?`<button class="ghost sm" data-act="recstart" data-key="${key}">🎙️ הקלטה</button>`:REC.on?`<button class="danger sm" data-act="recstop">⏹️ עצירה</button> <span class="mut">מקליט…</span>`:`<audio controls src="${REC.url}"></audio><button class="ghost sm" data-act="recdel">מחיקת הקלטה</button>`;
+async function takeRec(key){
+  if(REC.key!==key||!REC.blob)return null;if(!assets)throw new Error("העלאה לא זמינה");
+  const bt=REC.blob.type.includes("mp4")?"video/mp4":"video/webm";
+  const r=await assets.upload(new Blob([REC.blob],{type:bt}));recClear();return r.url;
+}
+
+function loginV(){
+  if(V.login==="teacher")return `<div class="card ticket"><h2>🎟️ כניסת מורים</h2><input id="tp" type="password" placeholder="סיסמת מורים"><input id="tu" placeholder="שם משתמש (באנגלית/עברית, בלי רווחים)"><input id="tn" placeholder="כינוי"><div class="row"><button data-act="tlogin">כניסה 🎤</button><button class="ghost" data-act="back">חזרה</button></div></div>`;
+  if(V.login==="student")return `<div class="card ticket"><h2>🎒 כניסת תלמידים</h2><p class="mut">שם משתמש חדש ייצור פרופיל. שם קיים יכניס אותך לפרופיל שלך.</p><input id="su" placeholder="שם משתמש"><input id="sn" placeholder="כינוי (לפרופיל חדש)"><div class="row"><button data-act="slogin">כניסה 🎡</button><button class="ghost" data-act="back">חזרה</button></div></div>`;
+  return `<div class="hero"><div style="font-size:60px">🎪🎡🎶</div><h2>ברוכים הבאים לכיתת הפסטיבל!</h2><p class="mut">כיתות, צ׳אט, משימות וציונים – הכול במקום אחד</p><div class="row" style="justify-content:center"><button data-act="lt">להיכנס בתור מורה 🧑‍🏫</button><button class="ghost" data-act="ls">להיכנס בתור תלמיד/ה 🎒</button></div></div>`;
+}
+function classesV(){
+  const mine=S.classes.filter(inCls);
+  return `${isT()?`<div class="card ticket"><h3>➕ כיתה חדשה</h3><input id="cn" placeholder="שם הכיתה"><input id="cd" placeholder="תיאור (לא חובה)"><button data-act="mkclass">יצירת כיתה 🎟️</button></div>`:""}
+  <div class="card"><h3>🔑 הצטרפות עם קוד כיתה</h3><div class="row"><input id="jc" placeholder="קוד כיתה" style="flex:1"><button data-act="join">הצטרפות</button></div></div>
+  <h3>הכיתות שלי</h3><div class="grid">${mine.map(c=>`<div class="card ticket"><h3>🎪 ${esc(c.name)}</h3><p class="mut">${esc(c.desc||"")}</p><p><span class="tag t">${c.teachers.length} מורים</span> <span class="tag">${c.students.length} תלמידים</span></p><button data-open="${c.id}">כניסה</button></div>`).join("")||'<p class="mut">עדיין אין כיתות. '+(isT()?"צרו אחת למעלה!":"בקשו הזמנה ממורה או הצטרפו עם קוד.")+"</p>"}</div>`;
+}
+function classV(){
+  const c=cls();if(!c||!inCls(c)){V.cid=null;return classesV()}
+  const T=isCT(c),tabs=[["chat","💬 צ׳אט"],["tasks","📝 משימות"],["grades","🏆 ציונים"],["people","👥 אנשים"]];
+  return `<div class="row"><button class="ghost sm" data-act="exit">→ חזרה</button><h2 style="margin:6px">🎪 ${esc(c.name)}</h2>${T?'<button class="danger sm" data-act="delclass" data-conf="1">🗑️ מחיקת כיתה</button>':""}</div>
+  <div class="row">${tabs.map(t=>`<button class="ghost ${V.tab===t[0]?"on":""}" data-tab="${t[0]}">${t[1]}</button>`).join("")}</div>
+  ${V.tab==="chat"?chatV(c.id):V.tab==="tasks"?tasksV(c,T):V.tab==="grades"?gradesV(c,T):peopleV(c,T)}`;
+}
+function chatV(id){
+  const m=S.msgs.filter(x=>x.cid===id).sort((a,b)=>a.t-b.t).slice(-150);
+  return `<div class="card"><div class="chat">${m.map(x=>`<div class="msg ${x.u===me?"me":""}"><b>${esc(nick(x.u))}${vb(x.u)}${P(x.u)?.role==="teacher"?" 🧑‍🏫":""}</b>${x.text?`<div>${esc(x.text)}</div>`:""}${aud(x.audio)}${canDelMsg(x)?`<button class="danger sm" data-act="delmsg" data-id="${x.id}">🗑️ מחיקה</button>`:""}</div>`).join("")||'<span class="mut">אף אחד עוד לא כתב… תהיו הראשונים! 🎤</span>'}</div><div class="row">${recUI("chat:"+id)}</div><div class="row"><input id="ci" placeholder="כתבו הודעה…" style="flex:1"><button data-act="send" data-cid="${id}">שליחה</button></div></div>`;
+}
+function tasksV(c,T){
+  const ts=S.tasks.filter(t=>t.cid===c.id).sort((a,b)=>b.t-a.t);
+  let h="";
+  if(T)h+=`<div class="card ticket"><h3>➕ משימה חדשה</h3><select id="tt"><option value="open">שאלה – תשובה פתוחה</option><option value="mc">שאלה אמריקאית</option><option value="file">הגשת קובץ</option><option value="audio">הקלטה קולית 🎙️</option></select><input id="ttl" placeholder="כותרת"><textarea id="ttx" rows="2" placeholder="הוראות / השאלה"></textarea><textarea id="tops" rows="3" placeholder="לאמריקאית: אפשרות בכל שורה"></textarea><input id="tcor" type="number" min="1" placeholder="לאמריקאית: מספר התשובה הנכונה (1,2,3…)"><label class="mut">⏰ הגשה עד (לא חובה)</label><input id="tdue" type="datetime-local"><input id="tmax" type="number" value="100" placeholder="ציון מקסימלי"><button data-act="mktask">פרסום משימה 📣</button></div>`;
+  h+=ts.map(t=>{
+    const subs=S.subs.filter(s=>s.tid===t.id),my=subs.find(s=>s.u===me);
+    let body="";
+    if(T){
+      body=`<h4>הגשות (${subs.length})</h4>`+subs.map(s=>`<div class="card" style="background:var(--card2)"><b>${esc(nick(s.u))}</b>${vb(s.u)}: ${s.file?`<a style="color:var(--cyan)" target="_blank" rel="noopener" href="${esc(s.file)}">📎 ${esc(s.fname||"קובץ")}</a>`:esc(s.ans)}${aud(s.audio)}${t.type==="mc"?(s.pick===t.cor?' <span class="tag g">נכון ✓</span>':' <span class="tag">שגוי</span>'):""}<div class="row"><input id="g_${s.id}" type="number" placeholder="ציון /${t.max}" value="${s.grade??""}" style="width:110px"><input id="f_${s.id}" placeholder="משוב" value="${esc(s.fb||"")}" style="flex:1"><button class="sm" data-act="grade" data-sid="${s.id}">שמירה</button><button class="ghost sm" data-act="clrgrade" data-sid="${s.id}">ניקוי ציון</button><button class="danger sm" data-act="delsub" data-conf="1" data-sid="${s.id}">🗑️ מחיקת הגשה</button></div></div>`).join("")||'<p class="mut">עוד אין הגשות</p>';
+      body+=`<button class="danger sm" data-act="deltask" data-conf="1" data-tid="${t.id}">🗑️ מחיקת משימה</button>`;
+    }else if(my){
+      body=`<p>✅ הגשת. ${my.grade!=null?`<span class="tag g">ציון: ${my.grade}/${t.max}</span> ${esc(my.fb||"")}`:'<span class="mut">ממתין לציון</span>'}${t.type==="mc"?` · ${my.pick===t.cor?"ענית נכון 🎉":"תשובה שגויה"}`:""}</p>`;
+    }else if(t.type==="open")body=`<textarea id="a_${t.id}" rows="2" placeholder="התשובה שלך"></textarea>${recUI("t:"+t.id)}<button data-act="submit" data-tid="${t.id}">הגשה</button>`;
+    else if(t.type==="mc")body=(t.opts||[]).map((o,i)=>`<label class="opt"><input type="radio" name="m_${t.id}" value="${i+1}">${esc(o)}</label>`).join("")+`<button data-act="submit" data-tid="${t.id}">הגשה</button>`;
+    else if(t.type==="audio")body=`<p class="mut">הקלידו… הקליטו ושלחו את התשובה בקול</p>${recUI("t:"+t.id)}<button data-act="submit" data-tid="${t.id}">הגשת הקלטה 📤</button>`;
+    else body=`<input id="a_${t.id}" type="file"><button data-act="submit" data-tid="${t.id}">העלאה והגשה 📤</button>`;
+    return `<div class="card"><span class="tag t">${{open:"שאלה פתוחה",mc:"אמריקאית",file:"הגשת קובץ",audio:"הקלטה קולית"}[t.type]}</span> <span class="mut">${t.max} נק׳</span> ${dueTag(t)}<h3>${esc(t.title)}</h3><p>${esc(t.text||"")}</p>${body}</div>`;
+  }).join("")||'<p class="mut">אין משימות עדיין.</p>';
+  return h;
+}
+function gradesV(c,T){
+  const ts=S.tasks.filter(t=>t.cid===c.id).sort((a,b)=>a.t-b.t);
+  const g=(u,t)=>S.subs.find(s=>s.tid===t.id&&s.u===u)?.grade;
+  const who=T?c.students:[me];
+  return `<div class="card"><table><tr><th>תלמיד/ה</th>${ts.map(t=>`<th>${esc(t.title)}</th>`).join("")}</tr>${who.map(u=>`<tr><td>${esc(nick(u))}</td>${ts.map(t=>`<td>${g(u,t)??"–"}</td>`).join("")}</tr>`).join("")}</table>${T?'<p class="mut">ציונים נותנים דרך לשונית המשימות, בהגשות.</p>':""}</div>`;
+}
+function peopleV(c,T){
+  const row=(u,r)=>`<div class="row"><span class="avatar">${ini(u)}</span><b>${esc(nick(u))}</b>${vb(u)}<span class="mut">@${esc(u)}</span><span class="tag ${r==="t"?"t":""}">${r==="t"?"מורה":"תלמיד/ה"}</span>${vbtn(u)}${T&&u!==me?`<button class="danger sm" data-act="rmperson" data-conf="1" data-u="${esc(u)}">הסרה מהכיתה</button>`:""}</div>`;
+  return `<div class="card"><p>קוד הכיתה: <b style="color:var(--yel);font-size:20px;letter-spacing:2px">${esc(c.code)}</b></p>${c.teachers.map(u=>row(u,"t")).join("")}<hr>${c.students.map(u=>row(u,"s")).join("")||'<p class="mut">אין תלמידים עדיין</p>'}</div>
+  ${T?`<div class="card ticket"><h3>✉️ הזמנת פרופיל</h3><p class="mut">הזמנת מורים אפשרית רק לפרופילים שהם מורים. תלמידים אפשר להזמין לפי שם משתמש.</p><input id="iu" placeholder="שם משתמש להזמנה"><div class="row"><button data-act="invite" data-r="teacher">הזמנה כמורה</button><button class="ghost" data-act="invite" data-r="student">הזמנה כתלמיד/ה</button></div>${(c.invites||[]).length?`<p class="mut">ממתינים: ${c.invites.map(u=>`${esc(u)} <button class="ghost sm" data-act="cancelinv" data-u="${esc(u)}">ביטול ✕</button>`).join(" ")}</p>`:""}</div>`:""}`;
+}
+function tgV(){
+  if(!isT()){V.page="classes";return classesV()}
+  const nm=S.meta.find(m=>m.id==="tg")?.name||"קבוצת המורים";
+  const ts=S.profiles.filter(p=>p.role==="teacher");
+  return `<div class="card ticket"><h2>🧑‍🏫 ${esc(nm)}</h2><div class="row"><input id="tgn" placeholder="שם חדש לקבוצה" style="flex:1"><button data-act="rename">שינוי שם</button></div><p class="mut">חברים (${ts.length}): ${ts.map(p=>esc(p.nick)).join(" · ")}</p></div>${chatV("T")}`;
+}
+function invV(){
+  const l=myInv();
+  return `<h3>✉️ הזמנות אליי</h3>`+(l.map(c=>`<div class="card ticket"><h3>${esc(c.name)}</h3><div class="row"><button data-act="accept" data-cid="${c.id}">קבלה 🎉</button><button class="ghost" data-act="decline" data-cid="${c.id}">דחייה</button></div></div>`).join("")||'<p class="mut">אין הזמנות כרגע.</p>');
+}
+function meV(){
+  const p=P(me);
+  return `<div class="card ticket"><div class="row"><span class="avatar" style="width:60px;height:60px;font-size:28px">${ini(me)}</span><div><h2 style="margin:0">${esc(p.nick)}${vb(me)}</h2><span class="mut">@${esc(p.id)}</span> <span class="tag ${p.role==="teacher"?"t":""}">${p.role==="teacher"?"מורה":"תלמיד/ה"}</span></div></div><hr><input id="pn" placeholder="כינוי חדש" value="${esc(p.nick)}"><div class="row"><button data-act="savenick">שמירת כינוי</button><button class="danger" data-act="logout">התנתקות</button>${isT()?'<button class="danger" data-act="delprofile" data-conf="1">🗑️ מחיקת הפרופיל שלי</button>':""}</div></div>
+  <h3>כל הפרופילים</h3><div class="grid">${S.profiles.map(q=>`<div class="card"><span class="avatar">${ini(q.id)}</span> <b>${esc(q.nick)}</b>${vb(q.id)} <span class="mut">@${esc(q.id)}</span> <span class="tag ${q.role==="teacher"?"t":""}">${q.role==="teacher"?"מורה":"תלמיד/ה"}</span> ${vbtn(q.id)}</div>`).join("")}</div>`;
+}
+const val=id=>(document.getElementById(id)?.value||"").trim();
+function setMe(u){me=u;try{localStorage.setItem("fc_me",u)}catch(e){}V.page="classes";V.cid=null;render()}
+const okName=u=>/^[^\s\/\\.'"]{2,24}$/.test(u);
+
+document.addEventListener("click",async e=>{
+  const b=e.target.closest("button,[data-go],[data-open],[data-tab]");if(!b)return;const d=b.dataset;
+  if(d.go){V.page=d.go;V.cid=null;return render()}
+  if(d.open){V.cid=d.open;V.tab=d.to||"chat";V.page="classes";return render()}
+  if(d.tab){V.tab=d.tab;return render()}
+  const a=d.act;if(!a)return;
+  if(b.dataset.conf&&!b.dataset.armed){b.dataset.armed=1;b.textContent="בטוח? לחצו שוב";setTimeout(()=>{delete b.dataset.armed;render()},4000);return}
+  if(a==="lt"){V.login="teacher";return render()}
+  if(a==="ls"){V.login="student";return render()}
+  if(a==="back"){V.login="choose";return render()}
+  if(a==="seen"){try{localStorage.setItem(seenKey(),Date.now())}catch(x){}return render()}
+  if(a==="recstart")return recStart(d.key);
+  if(a==="recstop"){if(REC.mr&&REC.mr.state!=="inactive")REC.mr.stop();return}
+  if(a==="recdel"){recClear();return render()}
+  if(a==="exit"){V.cid=null;return render()}
+  if(a==="logout"){me=null;try{localStorage.removeItem("fc_me")}catch(x){}V.login="choose";return render()}
+  await guard(async()=>{
+    if(a==="tlogin"){
+      if(val("tp")!==PASS)return toast("סיסמה שגויה ❌");
+      const u=val("tu"),n=val("tn")||u;if(!okName(u))return toast("שם משתמש לא תקין");
+      const ex=P(u);await col("profiles").doc(u).set({nick:ex?.nick||n,role:"teacher",verified:!!ex?.verified});setMe(u);
+    }
+    if(a==="slogin"){
+      const u=val("su");if(!okName(u))return toast("שם משתמש לא תקין");
+      if(!P(u))await col("profiles").doc(u).set({nick:val("sn")||u,role:"student"});
+      setMe(u);
+    }
+    if(a==="verify"){if(!isT())return;await col("profiles").doc(d.u).update({verified:!P(d.u)?.verified});toast(P(d.u)?.verified?"הוסר הוי":"ניתן וי כחול ✓")}
+    if(a==="delmsg")await col("msgs").doc(d.id).delete();
+    if(a==="delclass"){const c=cls();for(const x of S.tasks.filter(t=>t.cid===c.id))await col("tasks").doc(x.id).delete();for(const x of S.subs.filter(s=>s.cid===c.id))await col("subs").doc(x.id).delete();for(const x of S.msgs.filter(m=>m.cid===c.id))await col("msgs").doc(x.id).delete();await col("classes").doc(c.id).delete();V.cid=null;render();toast("הכיתה נמחקה")}
+    if(a==="clrgrade")await col("subs").doc(d.sid).update({grade:null,fb:""});
+    if(a==="delsub")await col("subs").doc(d.sid).delete();
+    if(a==="rmperson"){const c=cls();await col("classes").doc(c.id).update({teachers:c.teachers.filter(x=>x!==d.u),students:c.students.filter(x=>x!==d.u)})}
+    if(a==="cancelinv"){const c=cls();await col("classes").doc(c.id).update({invites:(c.invites||[]).filter(x=>x!==d.u)})}
+    if(a==="delprofile"){for(const c of S.classes.filter(inCls))await col("classes").doc(c.id).update({teachers:c.teachers.filter(x=>x!==me),students:c.students.filter(x=>x!==me)});await col("profiles").doc(me).delete();me=null;try{localStorage.removeItem("fc_me")}catch(x){}V.login="choose";render()}
+    if(a==="savenick"){await col("profiles").doc(me).update({nick:val("pn")||me});toast("נשמר ✨")}
+    if(a==="mkclass"){
+      const n=val("cn");if(!n)return toast("צריך שם לכיתה");
+      await col("classes").doc(uid()).set({name:n,desc:val("cd"),code:Math.random().toString(36).slice(2,8).toUpperCase(),teachers:[me],students:[],invites:[]});toast("הכיתה נוצרה 🎉");
+    }
+    if(a==="join"){
+      const c=S.classes.find(x=>x.code===val("jc").toUpperCase());if(!c)return toast("קוד לא נמצא");
+      if(inCls(c))return toast("כבר בכיתה");
+      if(isT())await col("classes").doc(c.id).update({teachers:[...c.teachers,me]});else await col("classes").doc(c.id).update({students:[...c.students,me]});toast("הצטרפת! 🎪");
+    }
+    if(a==="send"){
+      const t=val("ci"),au=REC.key==="chat:"+d.cid&&REC.blob&&!REC.on;if(!t&&!au)return;document.getElementById("ci").value="";
+      const o={cid:d.cid,u:me,text:t.slice(0,1000),t:Date.now()};
+      if(au){toast("שולח הקלטה…");o.audio=await takeRec("chat:"+d.cid)}
+      await col("msgs").doc(uid()).set(o);
+    }
+    if(a==="rename"){const n=val("tgn");if(n)await col("meta").doc("tg").set({name:n.slice(0,40)})}
+    if(a==="mktask"){
+      const c=cls(),ty=val("tt"),ti=val("ttl");if(!ti)return toast("צריך כותרת");
+      const o={cid:c.id,type:ty,title:ti,text:val("ttx"),max:+val("tmax")||100,due:val("tdue")?new Date(val("tdue")).getTime():null,t:Date.now(),by:me};
+      if(ty==="mc"){o.opts=document.getElementById("tops").value.split("\n").map(s=>s.trim()).filter(Boolean);o.cor=+val("tcor")||1;if(o.opts.length<2)return toast("צריך לפחות 2 אפשרויות")}
+      await col("tasks").doc(uid()).set(o);toast("פורסם 📣");
+    }
+    if(a==="deltask"){await col("tasks").doc(d.tid).delete();for(const s of S.subs.filter(s=>s.tid===d.tid))await col("subs").doc(s.id).delete()}
+    if(a==="submit"){
+      const t=S.tasks.find(x=>x.id===d.tid),o={tid:t.id,cid:t.cid,u:me,t:Date.now()};
+      if(t.type==="open"){o.ans=val("a_"+t.id);const au=REC.key==="t:"+t.id&&REC.blob;if(!o.ans&&!au)return toast("כתבו תשובה או הקליטו");if(au){toast("מעלה…");o.audio=await takeRec("t:"+t.id)}}
+      if(t.type==="audio"){if(!(REC.key==="t:"+t.id&&REC.blob))return toast("הקליטו קודם 🎙️");toast("מעלה…");o.audio=await takeRec("t:"+t.id);o.ans=""}
+      if(t.type==="mc"){const r=document.querySelector(`input[name="m_${t.id}"]:checked`);if(!r)return toast("בחרו תשובה");o.pick=+r.value;o.ans=t.opts[o.pick-1]}
+      if(t.type==="file"){
+        const f=document.getElementById("a_"+t.id).files[0];if(!f)return toast("בחרו קובץ");if(!assets)return toast("העלאת קבצים לא זמינה כאן");
+        toast("מעלה…");const r=await assets.upload(f);o.file=r.url;o.fname=f.name;
+      }
+      await col("subs").doc(t.id+"_"+me).set(o);toast("הוגש ✅");
+    }
+    if(a==="grade"){const g=val("g_"+d.sid);await col("subs").doc(d.sid).update({grade:g===""?null:+g,fb:val("f_"+d.sid),gat:Date.now()});toast("הציון נשמר 🏆")}
+    if(a==="invite"){
+      const c=cls(),u=val("iu"),p=P(u);if(!p)return toast("אין פרופיל כזה");
+      if(d.r==="teacher"&&p.role!=="teacher")return toast("אפשר להזמין כמורה רק פרופיל של מורה");
+      if(d.r==="student"&&p.role==="teacher")return toast("זה פרופיל מורה – הזמינו אותו כמורה");
+      if(inCls(c)&&(c.teachers.includes(u)||c.students.includes(u)))return toast("כבר בכיתה");
+      await col("classes").doc(c.id).update({invites:[...new Set([...(c.invites||[]),u])]});toast("ההזמנה נשלחה ✉️");
+    }
+    if(a==="accept"||a==="decline"){
+      const c=S.classes.find(x=>x.id===d.cid),upd={invites:(c.invites||[]).filter(x=>x!==me)};
+      if(a==="accept"){if(isT())upd.teachers=[...c.teachers,me];else upd.students=[...c.students,me]}
+      await col("classes").doc(c.id).update(upd);
+    }
+  });
+});
+document.addEventListener("keydown",e=>{if(e.key==="Enter"&&e.target.id==="ci"){document.querySelector('[data-act="send"]').click()}});
+init();
+</script>
+</body>
+</html>
